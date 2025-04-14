@@ -1,170 +1,14 @@
-
-import { useState } from 'react';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ShieldCheck, Gauge, Clock, Settings, PackagePlus, Truck } from 'lucide-react';
+import React from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
+import { CheckCircle2, Zap, Tool, TrendingUp, BarChart, Award, PenTool, Box, MapPin, Truck, Clock, DollarSign, Shield } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator, BreadcrumbPage } from '@/components/ui/breadcrumb';
 
 const ServicesPage = () => {
-  const [activeTab, setActiveTab] = useState("forging");
-
-  const services = [
-    {
-      id: "forging",
-      title: "Coal Forging",
-      icon: <Settings className="h-16 w-16" />,
-      shortDesc: "Advanced forging processes with precise temperature control and superior finish.",
-      fullDesc: "Our coal forging process combines traditional craftsmanship with modern precision. We maintain strict temperature controls throughout the forging process, ensuring optimal material properties and exceptional surface finish. Our facility is equipped with state-of-the-art hammers and presses capable of handling a wide range of materials and geometries.",
-      features: [
-        "Temperature-controlled forging processes",
-        "Wide range of material capabilities",
-        "Precision hammer and press operations",
-        "Superior surface finish",
-        "Comprehensive quality control"
-      ],
-      applications: [
-        "Automotive components",
-        "Industrial machinery",
-        "Construction equipment",
-        "Railway hardware",
-        "Heavy engineering"
-      ]
-    },
-    {
-      id: "thread",
-      title: "Thread Rolling",
-      icon: <Gauge className="h-16 w-16" />,
-      shortDesc: "High-precision thread rolling for superior thread quality and strength.",
-      fullDesc: "Our thread rolling capabilities deliver exceptional thread quality with superior strength characteristics. Unlike cut threads, our rolled threads maintain the grain structure of the material, resulting in up to 30% stronger threads. Our precision equipment can produce metric, imperial, and custom thread profiles to exact specifications.",
-      features: [
-        "Cold-forming thread technology",
-        "Metric, imperial, and custom thread profiles",
-        "Enhanced thread strength and durability",
-        "Precise pitch and lead accuracy",
-        "High-volume production capacity"
-      ],
-      applications: [
-        "High-strength fasteners",
-        "Precision instruments",
-        "Aerospace components",
-        "Medical devices",
-        "Critical safety hardware"
-      ]
-    },
-    {
-      id: "machining",
-      title: "VMC & CNC Machining",
-      icon: <Settings className="h-16 w-16" />,
-      shortDesc: "State-of-the-art LD25 machines for complex geometries and tight tolerances.",
-      fullDesc: "Our advanced Vertical Machining Centers (VMC) and Computer Numerical Control (CNC) machines deliver exceptional precision for complex components. Our facility features the latest LD25 machines capable of 5-axis simultaneous machining, allowing us to produce intricate geometries with tolerances as tight as ±0.005mm. Our skilled programmers and operators ensure consistent quality across production runs of any size.",
-      features: [
-        "5-axis simultaneous machining capability",
-        "Tolerances down to ±0.005mm",
-        "Complex geometry production",
-        "Multiple material capabilities",
-        "Advanced CAM programming"
-      ],
-      applications: [
-        "Precision mechanical components",
-        "Mold and die manufacturing",
-        "Custom industrial equipment",
-        "Prototype development",
-        "Low to high volume production"
-      ]
-    },
-    {
-      id: "jobwork",
-      title: "Precision Job Work",
-      icon: <Clock className="h-16 w-16" />,
-      shortDesc: "Custom machining solutions for specialized industrial applications.",
-      fullDesc: "Our precision job work services cater to specialized industrial applications requiring custom solutions. We work closely with clients to understand their unique requirements and deliver components that meet or exceed specifications. Our team has extensive experience across various sectors, allowing us to provide valuable input on design for manufacturability.",
-      features: [
-        "Custom component development",
-        "Reverse engineering capabilities",
-        "Design for manufacturability consultation",
-        "Comprehensive quality assurance",
-        "On-time delivery commitment"
-      ],
-      applications: [
-        "Legacy equipment maintenance",
-        "Custom machinery development",
-        "Specialized industrial processes",
-        "Repair and reconditioning",
-        "One-off prototype production"
-      ]
-    },
-    {
-      id: "oem",
-      title: "OEM Development",
-      icon: <PackagePlus className="h-16 w-16" />,
-      shortDesc: "Comprehensive OEM part development for multiple industrial sectors.",
-      fullDesc: "We partner with Original Equipment Manufacturers across multiple industrial sectors to develop and produce components that meet their exact specifications. Our comprehensive approach includes design collaboration, prototype development, testing, and full-scale production. Our expertise in materials and manufacturing processes allows us to optimize components for performance, durability, and cost-effectiveness.",
-      features: [
-        "Design collaboration and optimization",
-        "Prototype development and testing",
-        "Material selection expertise",
-        "Production scalability",
-        "Long-term partnership approach"
-      ],
-      applications: [
-        "Automotive industry",
-        "Industrial equipment manufacturing",
-        "Energy sector components",
-        "Agricultural machinery",
-        "Material handling equipment"
-      ]
-    },
-    {
-      id: "export",
-      title: "Export Ready",
-      icon: <Truck className="h-16 w-16" />,
-      shortDesc: "Global quality standards and reliable international shipping solutions.",
-      fullDesc: "Our export-ready services ensure that our products meet global quality standards and reach international clients efficiently. We handle all export documentation and compliance requirements, and partner with reliable logistics providers to ensure timely delivery anywhere in the world. Our quality management system is aligned with international standards, giving our global clients confidence in our products.",
-      features: [
-        "International certification compliance",
-        "Complete export documentation services",
-        "Secure packaging for international transit",
-        "Reliable logistics partnerships",
-        "Global customer support"
-      ],
-      applications: [
-        "International OEM supply chains",
-        "Global industrial projects",
-        "Overseas distributors and partners",
-        "International infrastructure development",
-        "Global manufacturing facilities"
-      ]
-    },
-    {
-      id: "quality",
-      title: "Quality Assured",
-      icon: <ShieldCheck className="h-16 w-16" />,
-      shortDesc: "ISO certified manufacturing processes with rigorous quality control.",
-      fullDesc: "Quality is at the heart of everything we do at Sekkot Engineering. Our ISO certified manufacturing processes and rigorous quality control ensure consistent excellence in every product we deliver. Our comprehensive quality management system includes incoming material inspection, in-process checks, and final verification against specifications. We maintain detailed quality records and traceability for all production batches.",
-      features: [
-        "ISO 9001:2015 certified processes",
-        "Comprehensive quality management system",
-        "Advanced measurement and testing equipment",
-        "Statistical process control implementation",
-        "100% final inspection protocol"
-      ],
-      applications: [
-        "Critical safety components",
-        "High-precision industrial applications",
-        "Applications with zero-defect requirements",
-        "Regulated industry components",
-        "Performance-critical parts"
-      ]
-    }
-  ];
-
-  const activeService = services.find(service => service.id === activeTab) || services[0];
-
   return (
-    <div className="min-h-screen bg-sekkot-dark text-white">
+    <div className="min-h-screen bg-black text-white">
       <Navbar />
       
       <div className="pt-24 pb-16">
@@ -172,7 +16,7 @@ const ServicesPage = () => {
           <Breadcrumb className="mb-8">
             <BreadcrumbList>
               <BreadcrumbItem>
-                <BreadcrumbLink as={Link} to="/">Home</BreadcrumbLink>
+                <BreadcrumbLink to="/">Home</BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
@@ -185,101 +29,176 @@ const ServicesPage = () => {
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Our Services</h1>
             <div className="w-20 h-1 bg-sekkot-purple mx-auto"></div>
             <p className="text-gray-300 mt-6 max-w-3xl mx-auto">
-              We provide comprehensive engineering solutions with a focus on precision, quality, and innovation to meet the diverse needs of our global clients.
+              Explore our comprehensive range of engineering services designed to meet your specific needs.
             </p>
           </div>
           
-          <Tabs 
-            defaultValue="forging" 
-            value={activeTab}
-            onValueChange={setActiveTab}
-            className="w-full"
-          >
-            <div className="overflow-x-auto pb-4">
-              <TabsList className="bg-sekkot-darker h-auto p-1 inline-flex whitespace-nowrap min-w-full justify-start md:justify-center">
-                {services.map(service => (
-                  <TabsTrigger 
-                    key={service.id} 
-                    value={service.id}
-                    className="px-4 py-2 h-auto data-[state=active]:bg-sekkot-purple data-[state=active]:text-white"
-                  >
-                    {service.title}
-                  </TabsTrigger>
-                ))}
-              </TabsList>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Service Card 1 */}
+            <div className="glass-card p-6 hover-scale">
+              <CheckCircle2 className="h-8 w-8 text-sekkot-purple mb-4" />
+              <h2 className="text-xl font-semibold mb-2">Precision Machining</h2>
+              <p className="text-gray-300 mb-4">
+                High-accuracy machining services for complex parts and components.
+              </p>
+              <ul className="list-disc list-inside text-gray-300 mb-4">
+                <li>CNC Milling</li>
+                <li>CNC Turning</li>
+                <li>Grinding</li>
+                <li>EDM</li>
+              </ul>
+              <Button as={Link} to="/contact" className="w-full bg-sekkot-purple hover:bg-sekkot-purple-dark">
+                Learn More
+              </Button>
             </div>
             
-            {services.map(service => (
-              <TabsContent key={service.id} value={service.id} className="p-0">
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                  <div className="lg:col-span-1">
-                    <div className="glass-card p-8 h-full flex flex-col items-center text-center">
-                      <div className="text-sekkot-purple mb-6">
-                        {service.icon}
-                      </div>
-                      <h2 className="text-2xl font-bold mb-4">{service.title}</h2>
-                      <p className="text-gray-300 mb-6">{service.shortDesc}</p>
-                      <Link to="/contact" className="mt-auto">
-                        <Button className="bg-sekkot-purple hover:bg-sekkot-purple-dark">
-                          Request Quote
-                        </Button>
-                      </Link>
-                    </div>
-                  </div>
-                  
-                  <div className="lg:col-span-2">
-                    <div className="glass-card p-8">
-                      <h3 className="text-xl font-semibold mb-4">Overview</h3>
-                      <p className="text-gray-300 mb-6">{service.fullDesc}</p>
-                      
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                          <h4 className="text-lg font-semibold mb-3 text-sekkot-purple">Features</h4>
-                          <ul className="space-y-2">
-                            {service.features.map((feature, index) => (
-                              <li key={index} className="flex items-start">
-                                <span className="text-sekkot-purple mr-2">•</span>
-                                <span className="text-gray-300">{feature}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                        <div>
-                          <h4 className="text-lg font-semibold mb-3 text-sekkot-purple">Applications</h4>
-                          <ul className="space-y-2">
-                            {service.applications.map((application, index) => (
-                              <li key={index} className="flex items-start">
-                                <span className="text-sekkot-purple mr-2">•</span>
-                                <span className="text-gray-300">{application}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </TabsContent>
-            ))}
-          </Tabs>
-          
-          <div className="mt-16 text-center">
-            <h3 className="text-2xl font-bold mb-6">Ready to Discuss Your Project?</h3>
-            <p className="text-gray-300 mb-8 max-w-2xl mx-auto">
-              Our team of experts is ready to understand your specific requirements and provide tailored solutions that meet your exact needs.
-            </p>
-            <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-              <Link to="/contact">
-                <Button className="bg-sekkot-purple hover:bg-sekkot-purple-dark w-full sm:w-auto">
-                  Contact Us
-                </Button>
-              </Link>
-              <Link to="/request-form">
-                <Button variant="outline" className="border-sekkot-purple text-sekkot-purple hover:bg-sekkot-purple hover:text-white w-full sm:w-auto">
-                  Submit a Request
-                </Button>
-              </Link>
+            {/* Service Card 2 */}
+            <div className="glass-card p-6 hover-scale">
+              <Zap className="h-8 w-8 text-sekkot-purple mb-4" />
+              <h2 className="text-xl font-semibold mb-2">Rapid Prototyping</h2>
+              <p className="text-gray-300 mb-4">
+                Fast and efficient prototyping to bring your ideas to life.
+              </p>
+              <ul className="list-disc list-inside text-gray-300 mb-4">
+                <li>3D Printing</li>
+                <li>SLA/SLS</li>
+                <li>CNC Prototyping</li>
+                <li>Vacuum Casting</li>
+              </ul>
+              <Button as={Link} to="/contact" className="w-full bg-sekkot-purple hover:bg-sekkot-purple-dark">
+                Explore Now
+              </Button>
             </div>
+            
+            {/* Service Card 3 */}
+            <div className="glass-card p-6 hover-scale">
+              <Tool className="h-8 w-8 text-sekkot-purple mb-4" />
+              <h2 className="text-xl font-semibold mb-2">Tool and Die Making</h2>
+              <p className="text-gray-300 mb-4">
+                Custom tool and die solutions for manufacturing processes.
+              </p>
+              <ul className="list-disc list-inside text-gray-300 mb-4">
+                <li>Injection Molds</li>
+                <li>Progressive Dies</li>
+                <li>Casting Dies</li>
+                <li>Fixtures & Gages</li>
+              </ul>
+              <Button as={Link} to="/contact" className="w-full bg-sekkot-purple hover:bg-sekkot-purple-dark">
+                Get a Quote
+              </Button>
+            </div>
+            
+            {/* Service Card 4 */}
+            <div className="glass-card p-6 hover-scale">
+              <TrendingUp className="h-8 w-8 text-sekkot-purple mb-4" />
+              <h2 className="text-xl font-semibold mb-2">Reverse Engineering</h2>
+              <p className="text-gray-300 mb-4">
+                Recreate parts from existing samples or designs.
+              </p>
+              <ul className="list-disc list-inside text-gray-300 mb-4">
+                <li>3D Scanning</li>
+                <li>CAD Modeling</li>
+                <li>Part Replication</li>
+              </ul>
+              <Button as={Link} to="/contact" className="w-full bg-sekkot-purple hover:bg-sekkot-purple-dark">
+                Inquire Now
+              </Button>
+            </div>
+            
+            {/* Service Card 5 */}
+            <div className="glass-card p-6 hover-scale">
+              <BarChart className="h-8 w-8 text-sekkot-purple mb-4" />
+              <h2 className="text-xl font-semibold mb-2">Quality Control & Inspection</h2>
+              <p className="text-gray-300 mb-4">
+                Ensuring the highest standards of quality for your products.
+              </p>
+              <ul className="list-disc list-inside text-gray-300 mb-4">
+                <li>CMM Inspection</li>
+                <li>Material Testing</li>
+                <li>Dimensional Analysis</li>
+              </ul>
+              <Button as={Link} to="/contact" className="w-full bg-sekkot-purple hover:bg-sekkot-purple-dark">
+                Request Inspection
+              </Button>
+            </div>
+            
+            {/* Service Card 6 */}
+            <div className="glass-card p-6 hover-scale">
+              <Award className="h-8 w-8 text-sekkot-purple mb-4" />
+              <h2 className="text-xl font-semibold mb-2">Surface Treatment & Finishing</h2>
+              <p className="text-gray-300 mb-4">
+                Enhance the durability and aesthetics of your parts.
+              </p>
+              <ul className="list-disc list-inside text-gray-300 mb-4">
+                <li>Anodizing</li>
+                <li>Powder Coating</li>
+                <li>Plating</li>
+              </ul>
+              <Button as={Link} to="/contact" className="w-full bg-sekkot-purple hover:bg-sekkot-purple-dark">
+                View Options
+              </Button>
+            </div>
+
+            {/* Service Card 7 */}
+            <div className="glass-card p-6 hover-scale">
+              <PenTool className="h-8 w-8 text-sekkot-purple mb-4" />
+              <h2 className="text-xl font-semibold mb-2">CAD/CAM Design</h2>
+              <p className="text-gray-300 mb-4">
+                Expert design services to optimize your product's form and function.
+              </p>
+              <ul className="list-disc list-inside text-gray-300 mb-4">
+                <li>3D Modeling</li>
+                <li>Simulation</li>
+                <li>Design Optimization</li>
+              </ul>
+              <Button as={Link} to="/contact" className="w-full bg-sekkot-purple hover:bg-sekkot-purple-dark">
+                Explore Design
+              </Button>
+            </div>
+
+            {/* Service Card 8 */}
+            <div className="glass-card p-6 hover-scale">
+              <Box className="h-8 w-8 text-sekkot-purple mb-4" />
+              <h2 className="text-xl font-semibold mb-2">Assembly & Integration</h2>
+              <p className="text-gray-300 mb-4">
+                Comprehensive assembly services to bring your components together.
+              </p>
+              <ul className="list-disc list-inside text-gray-300 mb-4">
+                <li>Mechanical Assembly</li>
+                <li>Electrical Integration</li>
+                <li>Testing & Validation</li>
+              </ul>
+              <Button as={Link} to="/contact" className="w-full bg-sekkot-purple hover:bg-sekkot-purple-dark">
+                Discover Assembly
+              </Button>
+            </div>
+
+            {/* Service Card 9 */}
+            <div className="glass-card p-6 hover-scale">
+              <Shield className="h-8 w-8 text-sekkot-purple mb-4" />
+              <h2 className="text-xl font-semibold mb-2">Consulting Services</h2>
+              <p className="text-gray-300 mb-4">
+                Expert advice and guidance to optimize your manufacturing processes.
+              </p>
+              <ul className="list-disc list-inside text-gray-300 mb-4">
+                <li>Process Optimization</li>
+                <li>Material Selection</li>
+                <li>Cost Reduction</li>
+              </ul>
+              <Button as={Link} to="/contact" className="w-full bg-sekkot-purple hover:bg-sekkot-purple-dark">
+                Book Consultation
+              </Button>
+            </div>
+          </div>
+          
+          <div className="mt-12 text-center">
+            <h2 className="text-3xl font-bold text-white mb-4">Ready to Get Started?</h2>
+            <p className="text-gray-300 max-w-3xl mx-auto mb-8">
+              Contact us today to discuss your project requirements and discover how we can help you achieve your goals.
+            </p>
+            <Button as={Link} to="/contact" className="bg-sekkot-purple hover:bg-sekkot-purple-dark">
+              Contact Us
+            </Button>
           </div>
         </div>
       </div>

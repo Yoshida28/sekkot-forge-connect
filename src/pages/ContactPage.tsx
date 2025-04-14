@@ -67,7 +67,7 @@ const ContactPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-sekkot-dark text-white">
+    <div className="min-h-screen bg-black text-white">
       <Navbar />
       
       <div className="pt-24 pb-16">
@@ -75,7 +75,7 @@ const ContactPage = () => {
           <Breadcrumb className="mb-8">
             <BreadcrumbList>
               <BreadcrumbItem>
-                <BreadcrumbLink as={Link} to="/">Home</BreadcrumbLink>
+                <BreadcrumbLink to="/">Home</BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
@@ -107,7 +107,7 @@ const ContactPage = () => {
                           <FormItem>
                             <FormLabel>Full Name</FormLabel>
                             <FormControl>
-                              <Input placeholder="John Doe" {...field} className="bg-sekkot-darker border-sekkot-purple text-white" />
+                              <Input placeholder="John Doe" {...field} className="bg-black border-sekkot-purple text-white" />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -121,7 +121,7 @@ const ContactPage = () => {
                           <FormItem>
                             <FormLabel>Email</FormLabel>
                             <FormControl>
-                              <Input placeholder="example@email.com" {...field} className="bg-sekkot-darker border-sekkot-purple text-white" />
+                              <Input placeholder="example@email.com" {...field} className="bg-black border-sekkot-purple text-white" />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -137,7 +137,7 @@ const ContactPage = () => {
                           <FormItem>
                             <FormLabel>Phone Number</FormLabel>
                             <FormControl>
-                              <Input placeholder="+91 98765 43210" {...field} className="bg-sekkot-darker border-sekkot-purple text-white" />
+                              <Input placeholder="+91 98765 43210" {...field} className="bg-black border-sekkot-purple text-white" />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -151,7 +151,7 @@ const ContactPage = () => {
                           <FormItem>
                             <FormLabel>Company (Optional)</FormLabel>
                             <FormControl>
-                              <Input placeholder="Your Company" {...field} className="bg-sekkot-darker border-sekkot-purple text-white" />
+                              <Input placeholder="Your Company" {...field} className="bg-black border-sekkot-purple text-white" />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -168,11 +168,11 @@ const ContactPage = () => {
                             <FormLabel>Department</FormLabel>
                             <Select onValueChange={field.onChange} defaultValue={field.value}>
                               <FormControl>
-                                <SelectTrigger className="bg-sekkot-darker border-sekkot-purple text-white">
+                                <SelectTrigger className="bg-black border-sekkot-purple text-white">
                                   <SelectValue placeholder="Select Department" />
                                 </SelectTrigger>
                               </FormControl>
-                              <SelectContent className="bg-sekkot-darker border-sekkot-purple text-white">
+                              <SelectContent className="bg-black border-sekkot-purple text-white">
                                 <SelectItem value="general">General Inquiry</SelectItem>
                                 <SelectItem value="sales">Sales</SelectItem>
                                 <SelectItem value="support">Technical Support</SelectItem>
@@ -192,7 +192,7 @@ const ContactPage = () => {
                           <FormItem>
                             <FormLabel>Subject</FormLabel>
                             <FormControl>
-                              <Input placeholder="Subject of your message" {...field} className="bg-sekkot-darker border-sekkot-purple text-white" />
+                              <Input placeholder="Subject of your message" {...field} className="bg-black border-sekkot-purple text-white" />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -209,7 +209,7 @@ const ContactPage = () => {
                           <FormControl>
                             <Textarea 
                               placeholder="Please provide details about your inquiry..." 
-                              className="min-h-32 bg-sekkot-darker border-sekkot-purple text-white" 
+                              className="min-h-32 bg-black border-sekkot-purple text-white" 
                               {...field} 
                             />
                           </FormControl>
@@ -250,9 +250,9 @@ const ContactPage = () => {
                     <div>
                       <h3 className="font-semibold mb-1">Address</h3>
                       <p className="text-gray-300">
-                        123 Industrial Area,<br />
-                        Mumbai, Maharashtra,<br />
-                        India - 400001
+                        T125, women's industrial estate,<br />
+                        Kattur, Thirumulavoyal,<br />
+                        Chennai, Tamil Nadu 600062
                       </p>
                     </div>
                   </div>
@@ -309,7 +309,7 @@ const ContactPage = () => {
           <div className="mt-12">
             <div className="glass-card p-0 overflow-hidden">
               <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d241317.11609823277!2d72.74109995845951!3d19.08219783958131!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c6306644edc1%3A0x5da4ed8f8d648c69!2sMumbai%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1650023567153!5m2!1sen!2sin" 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4526.97418074459!2d80.11065252598291!3d13.187829241090508!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a527dda9e5523b5%3A0xb135c24530516205!2sSekkot%20Engineering%20Export%20India%20(P)%20Ltd!5e0!3m2!1smr!2sin!4v1744606607478!5m2!1smr!2sin" 
                 width="100%" 
                 height="450" 
                 style={{ border: 0 }} 

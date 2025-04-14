@@ -1,5 +1,6 @@
 
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -7,9 +8,14 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Upload, Calendar, FileText, Package } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/contexts/AuthContext';
 
 const RequestForm = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -34,28 +40,89 @@ const RequestForm = () => {
     setFiles((prev) => prev.filter((_, i) => i !== index));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // In a real application, you would submit the form data and files to the server
-    console.log('Form submitted:', { formData, files });
+    setIsSubmitting(true);
     
-    toast({
-      title: "Request Submitted",
-      description: "Your request has been submitted successfully. We'll get back to you soon.",
-    });
+    try {
+      if (!user) {
+        toast({
+          title: "Authentication Error",
+          description: "You must be logged in to submit a request.",
+          variant: "destructive"
+        });
+        return;
+      }
 
-    // Reset form
-    setFormData({
-      title: '',
-      description: '',
-      quantity: '',
-      deadline: '',
-    });
-    setFiles([]);
+      // Upload files if any
+      let documentUrl = null;
+      if (files.length > 0) {
+        // Only upload the first file for simplicity
+        const file = files[0];
+        const fileExt = file.name.split('.').pop();
+        const fileName = `${Math.random().toString(36).substring(2)}.${fileExt}`;
+        const filePath = `${user.id}/${fileName}`;
+        
+        const { error: uploadError } = await supabase.storage
+          .from('request-documents')
+          .upload(filePath, file);
+          
+        if (uploadError) {
+          throw new Error(uploadError.message);
+        }
+        
+        const { data } = supabase.storage
+          .from('request-documents')
+          .getPublicUrl(filePath);
+          
+        documentUrl = data.publicUrl;
+      }
+      
+      // Submit the request to Supabase
+      const { error } = await supabase
+        .from('requests')
+        .insert({
+          user_id: user.id,
+          title: formData.title,
+          description: formData.description,
+          quantity: parseInt(formData.quantity) || 0,
+          deadline: formData.deadline,
+          document_url: documentUrl,
+          status: 'pending'
+        });
+        
+      if (error) throw error;
+      
+      toast({
+        title: "Request Submitted",
+        description: "Your request has been submitted successfully. We'll get back to you soon.",
+      });
+
+      // Reset form
+      setFormData({
+        title: '',
+        description: '',
+        quantity: '',
+        deadline: '',
+      });
+      setFiles([]);
+      
+      // Navigate to dashboard
+      navigate('/dashboard');
+      
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message || "There was an error submitting your request. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
-    <div className="min-h-screen bg-sekkot-dark text-white">
+    <div className="min-h-screen bg-black text-white">
       <Navbar />
       
       <div className="container mx-auto px-4 md:px-6 py-24">
@@ -75,7 +142,7 @@ const RequestForm = () => {
                     id="title"
                     name="title"
                     placeholder="e.g., Custom Shaft for Industrial Motor"
-                    className="pl-10 bg-sekkot-dark border-sekkot-gray/30 focus:border-sekkot-purple"
+                    className="pl-10 bg-black border-sekkot-gray/30 focus:border-sekkot-purple"
                     value={formData.title}
                     onChange={handleInputChange}
                     required
@@ -89,7 +156,7 @@ const RequestForm = () => {
                   id="description"
                   name="description"
                   placeholder="Describe your requirements in detail..."
-                  className="min-h-32 bg-sekkot-dark border-sekkot-gray/30 focus:border-sekkot-purple"
+                  className="min-h-32 bg-black border-sekkot-gray/30 focus:border-sekkot-purple"
                   value={formData.description}
                   onChange={handleInputChange}
                   required
@@ -106,7 +173,7 @@ const RequestForm = () => {
                       name="quantity"
                       type="number"
                       placeholder="Required quantity"
-                      className="pl-10 bg-sekkot-dark border-sekkot-gray/30 focus:border-sekkot-purple"
+                      className="pl-10 bg-black border-sekkot-gray/30 focus:border-sekkot-purple"
                       min="1"
                       value={formData.quantity}
                       onChange={handleInputChange}
@@ -123,7 +190,7 @@ const RequestForm = () => {
                       id="deadline"
                       name="deadline"
                       type="date"
-                      className="pl-10 bg-sekkot-dark border-sekkot-gray/30 focus:border-sekkot-purple"
+                      className="pl-10 bg-black border-sekkot-gray/30 focus:border-sekkot-purple"
                       value={formData.deadline}
                       onChange={handleInputChange}
                       required
@@ -165,7 +232,7 @@ const RequestForm = () => {
                     {files.map((file, index) => (
                       <div 
                         key={index}
-                        className="bg-sekkot-dark border border-sekkot-gray/30 rounded-md p-3 flex justify-between items-center"
+                        className="bg-black border border-sekkot-gray/30 rounded-md p-3 flex justify-between items-center"
                       >
                         <div className="flex items-center">
                           <FileText className="h-5 w-5 text-sekkot-purple mr-2" />
@@ -186,8 +253,19 @@ const RequestForm = () => {
                 </div>
               )}
               
-              <Button type="submit" className="w-full bg-sekkot-purple hover:bg-sekkot-purple-dark">
-                Submit Request
+              <Button 
+                type="submit" 
+                className="w-full bg-sekkot-purple hover:bg-sekkot-purple-dark"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? (
+                  <>
+                    <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent mr-2"></div>
+                    Submitting...
+                  </>
+                ) : (
+                  'Submit Request'
+                )}
               </Button>
             </form>
           </div>

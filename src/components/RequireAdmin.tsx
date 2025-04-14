@@ -11,7 +11,7 @@ const RequireAdmin = ({ children }: RequireAdminProps) => {
   const location = useLocation();
 
   if (loading) {
-    return <div className="min-h-screen bg-sekkot-dark flex items-center justify-center">
+    return <div className="min-h-screen bg-black flex items-center justify-center">
       <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-sekkot-purple"></div>
     </div>;
   }
