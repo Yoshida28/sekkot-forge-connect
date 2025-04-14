@@ -1,12 +1,13 @@
 
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,8 +18,16 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [location.pathname]);
+
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const isActive = (path: string) => {
+    return location.pathname === path ? "text-sekkot-purple" : "text-white";
   };
 
   return (
@@ -35,10 +44,11 @@ const Navbar = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-6">
-            <Link to="/" className="text-white hover:text-sekkot-purple transition-colors">Home</Link>
-            <Link to="/services" className="text-white hover:text-sekkot-purple transition-colors">Services</Link>
-            <Link to="/products" className="text-white hover:text-sekkot-purple transition-colors">Products</Link>
-            <Link to="/contact" className="text-white hover:text-sekkot-purple transition-colors">Contact</Link>
+            <Link to="/" className={`hover:text-sekkot-purple transition-colors ${isActive('/')}`}>Home</Link>
+            <Link to="/services" className={`hover:text-sekkot-purple transition-colors ${isActive('/services')}`}>Services</Link>
+            <Link to="/products" className={`hover:text-sekkot-purple transition-colors ${isActive('/products')}`}>Products</Link>
+            <Link to="/about" className={`hover:text-sekkot-purple transition-colors ${isActive('/about')}`}>About Us</Link>
+            <Link to="/contact" className={`hover:text-sekkot-purple transition-colors ${isActive('/contact')}`}>Contact</Link>
             <Link to="/login">
               <Button variant="outline" className="border-sekkot-purple text-sekkot-purple hover:bg-sekkot-purple hover:text-white">
                 <User className="mr-2 h-4 w-4" /> Login
@@ -65,10 +75,11 @@ const Navbar = () => {
         {isMobileMenuOpen && (
           <div className="md:hidden bg-sekkot-darker/95 backdrop-blur-md mt-4 rounded-lg p-4 animate-fade-in">
             <div className="flex flex-col space-y-4">
-              <Link to="/" className="text-white hover:text-sekkot-purple transition-colors px-4 py-2">Home</Link>
-              <Link to="/services" className="text-white hover:text-sekkot-purple transition-colors px-4 py-2">Services</Link>
-              <Link to="/products" className="text-white hover:text-sekkot-purple transition-colors px-4 py-2">Products</Link>
-              <Link to="/contact" className="text-white hover:text-sekkot-purple transition-colors px-4 py-2">Contact</Link>
+              <Link to="/" className={`hover:text-sekkot-purple transition-colors px-4 py-2 ${isActive('/')}`}>Home</Link>
+              <Link to="/services" className={`hover:text-sekkot-purple transition-colors px-4 py-2 ${isActive('/services')}`}>Services</Link>
+              <Link to="/products" className={`hover:text-sekkot-purple transition-colors px-4 py-2 ${isActive('/products')}`}>Products</Link>
+              <Link to="/about" className={`hover:text-sekkot-purple transition-colors px-4 py-2 ${isActive('/about')}`}>About Us</Link>
+              <Link to="/contact" className={`hover:text-sekkot-purple transition-colors px-4 py-2 ${isActive('/contact')}`}>Contact</Link>
               <Link to="/login" className="px-4 py-2">
                 <Button variant="outline" className="w-full border-sekkot-purple text-sekkot-purple hover:bg-sekkot-purple hover:text-white">
                   <User className="mr-2 h-4 w-4" /> Login
