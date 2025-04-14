@@ -79,7 +79,7 @@ const Footer = () => {
             <ul className="space-y-4">
               <li className="flex items-start">
                 <MapPin className="h-5 w-5 text-sekkot-purple mr-3 mt-1" />
-                <span className="text-gray-400">123 Industrial Area, Mumbai, Maharashtra, India - 400001</span>
+                <span className="text-gray-400">T125, women's industrial estate, Kattur, Thirumulavoyal, Chennai, Tamil Nadu 600062</span>
               </li>
               <li className="flex items-center">
                 <Phone className="h-5 w-5 text-sekkot-purple mr-3" />
@@ -87,7 +87,7 @@ const Footer = () => {
               </li>
               <li className="flex items-center">
                 <Mail className="h-5 w-5 text-sekkot-purple mr-3" />
-                <span className="text-gray-400">info@sekkot.com</span>
+                <span className="text-gray-400">sekkot_engineering@yahoo.com</span>
               </li>
               <li className="flex items-center">
                 <Clock className="h-5 w-5 text-sekkot-purple mr-3" />

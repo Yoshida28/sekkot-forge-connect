@@ -1,13 +1,15 @@
 
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, User } from 'lucide-react';
+import { Menu, X, User, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useAuth } from '@/contexts/AuthContext';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const { user, isAdmin, signOut } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -49,11 +51,32 @@ const Navbar = () => {
             <Link to="/products" className={`hover:text-sekkot-purple transition-colors ${isActive('/products')}`}>Products</Link>
             <Link to="/about" className={`hover:text-sekkot-purple transition-colors ${isActive('/about')}`}>About Us</Link>
             <Link to="/contact" className={`hover:text-sekkot-purple transition-colors ${isActive('/contact')}`}>Contact</Link>
-            <Link to="/login">
-              <Button variant="outline" className="border-sekkot-purple text-sekkot-purple hover:bg-sekkot-purple hover:text-white">
-                <User className="mr-2 h-4 w-4" /> Login
-              </Button>
-            </Link>
+            
+            {user ? (
+              <>
+                <Link to="/dashboard" className={`hover:text-sekkot-purple transition-colors ${isActive('/dashboard')}`}>
+                  Dashboard
+                </Link>
+                {isAdmin && (
+                  <Link to="/admin" className={`hover:text-sekkot-purple transition-colors ${isActive('/admin')}`}>
+                    Admin Panel
+                  </Link>
+                )}
+                <Button 
+                  variant="outline" 
+                  className="border-sekkot-purple text-sekkot-purple hover:bg-sekkot-purple hover:text-white"
+                  onClick={() => signOut()}
+                >
+                  <LogOut className="mr-2 h-4 w-4" /> Logout
+                </Button>
+              </>
+            ) : (
+              <Link to="/login">
+                <Button variant="outline" className="border-sekkot-purple text-sekkot-purple hover:bg-sekkot-purple hover:text-white">
+                  <User className="mr-2 h-4 w-4" /> Login
+                </Button>
+              </Link>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -80,11 +103,32 @@ const Navbar = () => {
               <Link to="/products" className={`hover:text-sekkot-purple transition-colors px-4 py-2 ${isActive('/products')}`}>Products</Link>
               <Link to="/about" className={`hover:text-sekkot-purple transition-colors px-4 py-2 ${isActive('/about')}`}>About Us</Link>
               <Link to="/contact" className={`hover:text-sekkot-purple transition-colors px-4 py-2 ${isActive('/contact')}`}>Contact</Link>
-              <Link to="/login" className="px-4 py-2">
-                <Button variant="outline" className="w-full border-sekkot-purple text-sekkot-purple hover:bg-sekkot-purple hover:text-white">
-                  <User className="mr-2 h-4 w-4" /> Login
-                </Button>
-              </Link>
+              
+              {user ? (
+                <>
+                  <Link to="/dashboard" className={`hover:text-sekkot-purple transition-colors px-4 py-2 ${isActive('/dashboard')}`}>
+                    Dashboard
+                  </Link>
+                  {isAdmin && (
+                    <Link to="/admin" className={`hover:text-sekkot-purple transition-colors px-4 py-2 ${isActive('/admin')}`}>
+                      Admin Panel
+                    </Link>
+                  )}
+                  <Button 
+                    variant="outline" 
+                    className="w-full border-sekkot-purple text-sekkot-purple hover:bg-sekkot-purple hover:text-white mx-4"
+                    onClick={() => signOut()}
+                  >
+                    <LogOut className="mr-2 h-4 w-4" /> Logout
+                  </Button>
+                </>
+              ) : (
+                <Link to="/login" className="px-4 py-2">
+                  <Button variant="outline" className="w-full border-sekkot-purple text-sekkot-purple hover:bg-sekkot-purple hover:text-white">
+                    <User className="mr-2 h-4 w-4" /> Login
+                  </Button>
+                </Link>
+              )}
             </div>
           </div>
         )}
